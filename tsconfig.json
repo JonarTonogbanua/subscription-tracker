@@ -20,6 +20,7 @@
       "@modules/*": ["modules/*"],
       "@components/*": ["components/*"],
       "@hooks/*": ["hooks/*"],
+      "@context/*": ["context/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

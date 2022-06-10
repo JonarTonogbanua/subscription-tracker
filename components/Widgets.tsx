@@ -1,46 +1,46 @@
-import Cards from "@components/Cards"
+import { Card } from "@mantine/core"
 
 const WidgetTotalCost = () => {
   return <>
-    <Cards>
+    <Card className="w-full bg-accent rounded-lg">
       <h3 className="text-gray-400">Monthly Cost</h3>
       <div className="text-white text-[35px] font-bold">
         $300
       </div>
-    </Cards>
+    </Card>
   </>
 }
 
 const WidgetActiveSubscription = () => {
   return <>
-    <Cards>
+    <Card className="w-full bg-accent rounded-lg">
       <h3 className="text-gray-400">Active Subscription</h3>
       <div className="text-white text-[35px] font-bold">
         10
       </div>
-    </Cards>
+    </Card>
   </>
 }
 
 const WidgetExpiringSubscription = () => {
   return <>
-    <Cards>
+    <Card className="w-full bg-accent rounded-lg">
       <h3 className="text-gray-400">Expiring Subscription</h3>
       <div className="text-white text-[35px] font-bold">
         2
       </div>
-    </Cards>
+    </Card>
   </>
 }
 
 const WidgetExpiredSubscription = () => {
   return <>
-    <Cards>
+    <Card className="w-full bg-accent rounded-lg">
       <h3 className="text-gray-400">Expired Subscription</h3>
       <div className="text-white text-[35px] font-bold">
         1
       </div>
-    </Cards>
+    </Card>
   </>
 }
 

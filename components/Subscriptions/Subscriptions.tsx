@@ -1,9 +1,48 @@
-import Cards from "@components/Cards";
-import Modal from "@components/Modal";
+import { Text, ActionIcon, Modal, Card, Title } from "@mantine/core";
 import Image from "next/image";
+import React from "react";
+import SubscriptionCard from "./SubscriptionsCard";
+import SubscriptionForm from "./SubscriptionsForm";
+
+const SubscriptionsModalHeader = ({readOnly, setReadOnly}: {readOnly: boolean, setReadOnly: (readOnly: boolean) => void}) => {
+	return (
+		<div className="flex items-center justify-between w-full">
+			<Title className="text-white text-[22px] font-medium text-[#eba937]">{ readOnly ? "View" : "Add new" } subscription</Title>
+			<button onClick={() => setReadOnly(!readOnly)}>
+				{
+					readOnly ? <span>Edit</span> : <span>Delete</span>
+				}
+			</button>
+		</div>
+	)
+}
 
 const Subscriptions = () => {
+	const [opened, setOpened] = React.useState<boolean>(false);
+	const [readOnly, setReadOnly] = React.useState<boolean>(false);
 	const SubscriptionData = Array.from(Array(10).keys());
+
+  const cardClickHandler = (e: React.SyntheticEvent, action?: String): void => {
+		e.stopPropagation();
+		switch (action) {
+			case "link":
+				let win = window.open("https://www.netflix.com", "_blank");
+				win?.focus();
+				break;
+			case "dismiss":
+				break;
+
+			case "create":
+        setOpened(true)
+        setReadOnly(false)
+				break;
+
+			default:
+        setOpened(true)
+        setReadOnly(true)
+				break;
+		}
+	};
 
 	return (
 		<>
@@ -17,53 +56,38 @@ const Subscriptions = () => {
 				</div>
 				<div className="mt-10 grid grid-rows-5 grid-flow-col gap-4">
 					{SubscriptionData.map((subscription, i) => {
-						return (
-							<Cards
-								key={i}
-								className="hover:shadow-xl hover:bg-[#424a4c] cursor-pointer"
-							>
-								<div className="flex flex-row items-center justify-between">
-									<div>
-										<h3 className="text-gray-200 font-bold flex items-center">
-											Netflix
-											<a className="flex items-center ml-5 rounded-full hover:bg-accent p-1">
-												<Image
-													src="/assets/images/link-out.svg"
-													alt="link-out"
-													height={24}
-													width={24}
-												/>
-											</a>
-										</h3>
-										<h5 className="text-gray-400">Family Plan - 4 Devices</h5>
-										<div className="text-white text-sm">
-											Next billing: July 30
-										</div>
-									</div>
-									<div className="pl-4">
-										<div className="text-[28px] text-[#eba937] font-bold">
-											$5.00
-										</div>
-										<div className="text-white text-xs text-right">
-											{" "}
-											/ month
-										</div>
-									</div>
-								</div>
-								<div className="flex flex-row items-center justify-end">
-									<button
-										type="button"
-										className="w-full inline-flex justify-center rounded-md border border-gray-500 shadow-sm px-4 py-1 bg-transparent font-medium text-white hover:bg-primary sm:ml-3 sm:w-auto sm:text-sm"
-									>
-										Mark as Renewed
-									</button>
-								</div>
-							</Cards>
-						);
+						return <SubscriptionCard key={i} onClick={cardClickHandler}/>;
 					})}
-					{/* <Modal /> */}
+					<div className="fixed bottom-5 right-10">
+						<button
+							onClick={(e: React.MouseEvent): void => cardClickHandler(e, "create")}
+							className="px-4 py-4 bg-[#1e1e1e] hover:shadow-2xl flex justify-center items-center rounded-full"
+						>
+							<Image
+								className="pointer-events-none"
+								src="/assets/images/plus-icon.svg"
+								alt="link-out"
+								height={48}
+								width={48}
+							/>
+						</button>
+					</div>
 				</div>
 			</div>
+			<Modal
+        centered
+				opened={opened}
+        withCloseButton={false}
+        size="sm"
+				onClose={() => setOpened(false)}
+				title={<SubscriptionsModalHeader readOnly={readOnly} setReadOnly={setReadOnly} />}
+        classNames={{
+          modal: 'bg-primary',
+					title: 'w-full'
+        }}
+			>
+				<SubscriptionForm readOnly={readOnly} dismiss={ () => setOpened(false) }/>
+			</Modal>
 		</>
 	);
 };

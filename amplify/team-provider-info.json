@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-subscriptiontracker-dev-113734-authRole",
+      "UnauthRoleArn": "arn:aws:iam::443845800651:role/amplify-subscriptiontracker-dev-113734-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::443845800651:role/amplify-subscriptiontracker-dev-113734-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-subscriptiontracker-dev-113734-deployment",
+      "UnauthRoleName": "amplify-subscriptiontracker-dev-113734-unauthRole",
+      "StackName": "amplify-subscriptiontracker-dev-113734",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:443845800651:stack/amplify-subscriptiontracker-dev-113734/ab6803d0-e86e-11ec-8d9e-0232c04b1cc2",
+      "AmplifyAppId": "d3efguu2wm3wxw"
+    },
+    "categories": {
+      "auth": {
+        "subscriptiontrackerc7c1bc13": {}
+      }
+    }
+  }
+}
