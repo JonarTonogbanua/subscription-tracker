@@ -3,7 +3,7 @@ import { MantineProvider } from "@mantine/core";
 import type { AppProps } from "next/app";
 import { AppContext } from "@context/ContextProvider";
 import { useEffect, useState } from "react";
-import Amplify, { Auth } from "aws-amplify";
+import Amplify, { Auth, Hub } from "aws-amplify";
 import { CognitoUser } from "@aws-amplify/auth";
 import config from "../src/aws-exports";
 
@@ -17,22 +17,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	useEffect(() => {
 		checkSession();
+		authListener();
 	}, []);
 
 	const checkSession = async () => {
 		try {
 			const userData = await Auth.currentAuthenticatedUser();
 			setUser(userData);
-		} catch (error) {
-			setUser(null);
-		}
+		} catch (error) {}
 	};
 
-	const logout = () => {
-		try {
-			Auth.signOut();
-			setUser(null);
-		} catch (error) {}
+	const authListener = () => {
+		Hub.listen("auth", (data: any) => {
+			switch (data.payload.event) {
+				case "signIn":
+					checkSession();
+					break;
+				case "signOut":
+					setUser(null);
+					break;
+			}
+		});
 	};
 
 	return (
@@ -43,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 				colorScheme: "dark",
 			}}
 		>
-			<AppContext.Provider value={{ user, logout, checkSession }}>
+			<AppContext.Provider value={{ user }}>
 				<Component {...pageProps} />
 			</AppContext.Provider>
 		</MantineProvider>

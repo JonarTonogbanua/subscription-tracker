@@ -1,9 +1,10 @@
 import { ReactNode } from "react";
 import { Button, Container, Text } from "@mantine/core";
 import { useAppContext } from "@context/ContextProvider";
+import { Auth } from "aws-amplify";
 
 const Layout = ({ children }: { children: ReactNode }) => {
-	const { user, logout } = useAppContext();
+	const { user } = useAppContext();
 
 	return (
 		<>
@@ -14,7 +15,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 							Subscription Tracker
 						</Text>
             {
-              user && <Button color="orange" onClick={logout}>Logout</Button>
+              user && <Button color="orange" onClick={() => Auth.signOut() }>Logout</Button>
             }
 					</Container>
 				</div>
